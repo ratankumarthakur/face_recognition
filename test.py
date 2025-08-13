@@ -6,8 +6,6 @@ import os
 import csv
 import time
 from datetime import datetime
-
-
 from win32com.client import Dispatch
 
 def speak(str1):
@@ -27,7 +25,7 @@ print('Shape of Faces matrix --> ', FACES.shape)
 knn=KNeighborsClassifier(n_neighbors=5)
 knn.fit(FACES, LABELS)
 
-imgBackground=cv2.imread("background.png")
+imgBackground=cv2.imread("bg2.png")
 
 COL_NAMES = ['NAME', 'TIME']
 
@@ -49,11 +47,12 @@ while True:
         cv2.putText(frame, str(output[0]), (x,y-15), cv2.FONT_HERSHEY_COMPLEX, 1, (255,255,255), 1)
         cv2.rectangle(frame, (x,y), (x+w, y+h), (50,50,255), 1)
         attendance=[str(output[0]), str(timestamp)]
+    
     imgBackground[162:162 + 480, 55:55 + 640] = frame
     cv2.imshow("Frame",imgBackground)
     k=cv2.waitKey(1)
     if k==ord('o'):
-        speak("Attendance Taken..")
+        speak(str(output[0])+"Your Attendance is Taken..")
         time.sleep(5)
         if exist:
             with open("Attendance/Attendance_" + date + ".csv", "+a") as csvfile:
